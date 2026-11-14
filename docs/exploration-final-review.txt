@@ -1,0 +1,31 @@
+﻿Final bounded science + UI integration review
+Date 2026-11-14. Reviewer t1q, read-only.
+Test target: current main-repo working tree atop HEAD 154e54e2cf56d1695a970c66cd72b7fbdc51673b (files are uncommitted).
+
+Verified file hashes:
+src/science/terrain.ts 1E66A31A39961FCD4835842B9ACE117FC5D7B24E03FAC280FBA6926D81E5E6DF
+public/data/terrain-pgda90-southpolar.json DCEAC4465B00D8BC8A0CDD42662793540259B45AA0A76F53B322B559DD506DB6
+scripts/ephemeris/generate.py 985F9AD9BEE2783BEA668AEC563784CCDF4913B83D72E38B96CF4A1624BD2EA5
+scripts/ephemeris/terrain.test.mjs CCBC5809442DC266115E5E79DC186BDB9DB6C201943AF3BD0C0FBA3FD74C1E61
+scripts/ephemeris/events-observer.test.mjs C9620EFD33647A6156506F31672BA80366B7C50CD39A95295714B87B6EA37B1E
+src/ui/exploration.ts 0AD22B73A599B360241F36B2442CD0EFD14ED53EAF3653FC1D6A0208C9DAE8EB
+src/scene/SurfaceScene.ts D52D645D52D063311ED1D2AB48203AF295395681B198FE8D72A95B3664087B77
+src/science/events.ts 9F0CC9EE003438D4362A5DCBF213F3479F3AD52B887071FF099D411E045634A8
+src/science/observer.ts 4FC60250E00E2061F81D33671562BE19D0234F44879381C36D6ABB9A26FAFB99
+
+Executed:
+- node --test scripts/ephemeris/terrain.test.mjs scripts/ephemeris/events-observer.test.mjs: 6/6 pass.
+- npm test: 48/48 pass.
+- npm run typecheck: pass.
+- Independent Python Moller-Trumbore over the same two triangles per cell: first hit at h=250m, az0, alt-89 is 250.5030992769727m, exactly matching API. h=0 downward surface origin blocks; no-hit remains insufficient. No finite-patch clear result is possible.
+
+One remaining scientific API edge blocker:
+rayTriangle in terrain.ts accepts only hit distance >0.5m. The API accepts fractional observerHeightM, but its origin-surface special case is only used at exactly h=0. Repro in current main: analyzeTerrainHorizon(patch, vettedSite, 0.1, 0, -90) and heights 0.49 return insufficient; at h=0.5 it returns blocked at 0.5m, and h=1 returns blocked at 1m. These rays point into the measured ground and must be blocked for all positive eye heights. UI slider step is one metre, so ordinary UI values 0/1+ avoid this, but public API contract allows fractional heights. Fix by lowering intersection epsilon to a numerical epsilon or explicit near-ground rule; add fractional clearance regression. Scientific verdict is conditional until fixed or API explicitly restricts observer height to integer metres.
+
+Main UI source review:
+- Terrain renderer is correctly anchored at sampled DEM xyz for the single exact vetted site. Exploration checks exact site coordinates before enabling terrain; camera height is relative to local DEM in terrain mode, clamped to a separately disclosed 2m visual minimum. Renderer and ray code use the same triangle diagonal/index pattern; real mode hides reference-sphere ground and draws only a known patch boundary.
+- Event search uses cached full-data analyses for current site/height; next-joint button chooses only span.startEt > current ET, skipping an ongoing window. Bounds validation lives in getUpcomingEvents.
+- Scenario import/storage/hash/export use validateScenarioSet/parseScenarioSet; unsupported dataset or out-of-range windows are shown as errors rather than shifted.
+- No UI-source blocker found for requested scope. This is code review, not browser acceptance.
+
+No source/Git changes made by reviewer.

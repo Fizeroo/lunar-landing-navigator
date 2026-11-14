@@ -1,0 +1,30 @@
+﻿REVIEW-SCIENCE-GATE FINAL — PASS — t1q — 2026-11-14
+Scope: current integrated main, first single-site MVP, 2026-11-01T00:00:00Z through 2026-12-01T00:00:00Z. No scientific blocker identified. No scope expansion or implementation edits by reviewer.
+
+Frozen reviewed hashes (SHA256):
+public/data/ephemeris-2026-11.json: 8a9240acec08c513de2f38e5c2959ad51a6ccc8673032e53b005d07c284c5ae6
+src/science/index.ts: c199ec44438426c0aae52ed4e2867a1ccc4c8dd622463ac12352ff7bea7b7806
+scripts/ephemeris/generate.py: 0068f5946e91d1599b837fabe8bb047fac284ac49d66e140adce434fb302d186
+scripts/ephemeris/validate.py: 58bddb585b03dffe0e889bbeb0b5399859950d15e3c25af0e2dcb05147779a52
+
+DIRECT reviewer evidence:
+- Read final main source, scientific contracts, generator, lock, validation code and developer validation record. Compared old integrated and final developer JSON: all4322 samples, model, coverage exactly equal; changes only generatedUtc, generatorVersion and targetNaifIds. Diff of TS shows provenance checks only, no observation/interpolation/time-math changes. Final main hashes match frozen developer hashes.
+- Before metadata-only delta independently recomputed all8644 main sample vectors using actual .venv SpiceyPy8.0.2/CSPICE_N0067 spkpos(10/399,exact ME,NONE,301)*1000: max residual0m. Kernel hashes independently matched lock/provenance; actual coverage and frame31009 confirmed. The same physical arrays remain in final JSON.
+- Independent direct TS->CSPICE off-grid check2880 directions: max3.421197696e-6deg; independent Python check6400 directions max3.48065e-6deg; observed below0.001deg on exercised cases, not a global mathematical bound. Own serial Horizons UTC/NONE/ICRF service calls at3 dates each gave2.15..2.66m differences vs DE440, consistent with current service DE441.
+- Independent ENU fixtures, exact UTC endpoints, all4322 sample time lookup, invalid dates/missing timezone/leap60/nonzero height/out-of-range rejection, poles and surface subtraction checked. UTC labels max0.00049794s error vs direct CSPICE on exercised random observations, consistent with ms UI rounding.
+- Actual main npm test after final sync:19/19 passed; npm run typecheck:pass. These commands do not write source artifacts. No reviewer build/generator execution writing into project.
+- Main served URL http://127.0.0.1:4173/data/ephemeris-2026-11.json HTTP200; independently downloaded bytes SHA2568a9240... exactly equal final main data. No stale served scientific payload.
+- Source coupling verified: numerical cards use observation.sun/earth, DirectionalLight uses the same observation.sunDirectionBody through proper(X,Z,-Y) rotation, Earth center direction separately returned. BodyObservation.direction remains site-to-target unit ME, not ENU. Camera only changes presentation. No fabricated data fallback; missing/invalid data clears scientific light/results. Footer explicitly sphere h0/no-terrain/no-eclipse/refraction/no-energy-or-radio guarantee.
+- Actual THREE SphereGeometry and coordinate functions tested read-only: body->scene->body residual0 over35 sites, seam/poles handled, UV center lon0 and quarter lon90E. Light/globe-normal consistency tests passed at3 dates. Source/geometry checks are not a substitute for human browser visual evidence.
+
+ARCHITECT-REPORTED evidence (not personally observed by reviewer):
+- Actual Edge browser http://127.0.0.1:4173 exercised orbit/zoom/picking, UTC14Nov lat-89/lon0 cards Sun126.64/+0.960 Earth358.77/-3.649 (agrees with my independent fixtures), slider changes light/cards, exact Dec1 accepted, Dec2 rejected, pole az undefined, playback advances.
+- Final production build passed. Integrated generator run using cached kernels to TEMP reproduced all4322 rows/model/coverage identically. Reviewer did not independently rerun production build or this full regeneration after final metadata delta.
+
+Required findings versus optional hardening:
+- No unresolved REQUIRED blocker for this shipped real-data slice. Final source/data and observed behavior satisfy the accepted geometric smooth-sphere scope based on combined direct reviewer and architect browser evidence.
+- Stronger provenance input validation was defensive hardening for arbitrary inputs, not a retroactive numerical blocker; final code includes it and19tests pass. Do not broaden into terrain/apparent/power/link, A/B or event analysis.
+- Current first slice calls pure science synchronously; no Worker claim should be made. The later worker architecture remains deferred/scope decision and is not required for the six first-slice behaviors.
+- Full challenge text/compliance remains unverified. Scientific correctness acceptance does not certify real landing safety, terrain illumination, electrical power, station/link visibility or actual eclipse-aware sunlight.
+
+All reviewer commands were reads/read-only numerical execution or writes solely to TEMP review protocols. No source edits, commits/Git mutations, new agents, installs or server starts by reviewer. Available for concrete subsequent issues; no further work requested for this gate.

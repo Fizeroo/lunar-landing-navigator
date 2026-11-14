@@ -1,0 +1,16 @@
+﻿Independent event/observer review
+Reviewer: t1q, read-only
+Source worktree: C:\Users\emir0\projects\lunar-landing-navigator\worktrees\codex, branch feat/astro-timeline
+Dataset: actual public/data/ephemeris-2026-11.json
+
+Checks run
+- node --test scripts/ephemeris/events-observer.test.mjs: PASS, 2/2.
+- Independent direct-vector height oracle, independently interpolating the ephemeris Cartesian target and subtracting (R+h)u: at ET sample 2500 + 123.456s, site lat -89.5 lon 12, h=4321.25m, Sun and Earth distance/direction residuals were exactly zero; altitude residual was zero for Sun and -2.22e-16deg for Earth.
+- Height zero observeObserver deep-equals observeAt.
+- Existing tests verify analyzeObserver h=0 summaries equal analyzeSite summaries.
+- API input issue: observeObserver silently accepts site.heightAboveReferenceSphereM=300 because it resets site height to zero before observeAt validation; analyzeObserver rejects this input. t1p has been asked to reject the mismatch consistently.
+- Event input issue: getUpcomingEvents accepted ET one second below and one second above analysis.period in both cases. t1p has been asked to reject out-of-period ET and add bounds tests. NaN is already rejected.
+- Existing event fixture confirms event transitions are returned only when strictly after current ET, and analysis-coverage endpoints are not emitted as physical rise/set events in tested cases.
+
+Review verdict
+Observer vector mathematics and h=0 compatibility pass for tested points. API validation has two concrete blockers above. No terrain module/DEM was reviewed in this worktree listing at this time.

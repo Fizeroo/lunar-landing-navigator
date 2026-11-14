@@ -1,0 +1,26 @@
+﻿PGDA90 Terrain Artifact — Independent Source and Geometry Review
+Reviewer: t1q (read-only)
+Source worktree: C:\Users\emir0\projects\lunar-landing-navigator\worktrees\codex, branch feat/astro-timeline
+Reviewed artifact: public/data/terrain-pgda90-southpolar.json
+Review date: 2026-11-14
+
+Independent source/data verification
+1. Executed scripts/ephemeris/prepare_terrain.py against the live official PGDA URL, writing only to TEMP. The regenerated artifact is byte-identical in size to staged JSON (799,225 bytes), and metadata/raw array checks match.
+2. Re-read the exact COG window through rasterio /vsicurl. Window rowOff 3370, colOff 3750, 101x101. SHA256 of original float32 window bytes is 665b4639b2b1479967634ac1bd2d69a21c16e861535cc83b97961eebe5f9a632, matching metadata. All 10,201 packaged heights exactly match source values; zero source NaNs in this window.
+3. Dataset CRS is IAU:30135 lunar south polar stereographic, affine pixel spacing +80/-80m, AREA_OR_POINT=Area. Pixel centers are at affine pixel coordinate +0.5; independently inverse-transforming those centers to lon/lat and reconstructing radial xyz produced max absolute difference 0.0m against every packaged positionsM entry.
+4. Verified center observer: lat -88.99881598131347°, lon +0.07548846687812798° east, DEM height -388.6183776855469m. Window corners span approximately lat -89.13072° to -88.85911°, longitude -8.54352° to +8.71349°. Height range is -1204.41m to -231.69m.
+5. Source frame is MOON_ME_DE421; app frame metadata is MOON_ME_DE440_ME421 with explicit approximate alignment bound 5.8204420784597e-7 rad / ~1.011m over 1900–2051 and no PA-to-ME transform. This is an honest approximation if consistently applied/labeled; not exact frame identity. The frame mapping convention still needs implementation-level verification in terrain.ts.
+Official source: https://pgda.gsfc.nasa.gov/products/90 . It identifies polar stereographic X/Y in metres, MOON_ME of DE421, and companions for LOLA counts (LDEC), effective resolution, and height error.
+
+Quality/coverage cautions
+- The 101x101 window is only ~8.08km across; zero NaNs means every raster pixel has a height value, not that each cell is a direct/high-resolution observation. Product 90 exposes LDEC, effective-resolution and height-error companion rasters; this JSON carries none of those quality layers. Describe it as a sampled DEM product with unresolved local effective-resolution/uncertainty, not a uniform 80m-accurate ground truth.
+- No terrain hit inside a finite window cannot certify clear visibility. At the center site, distant terrain outside the ~4km half-width can still rise above the ray; smooth-sphere tangent alone does not bound unknown topographic relief. For a horizontal ray, reference-sphere curvature drop is about 260m at 30km distance; any unseen ridge higher than the ray can obstruct. Report unknown/coverage-insufficient unless all relevant terrain is bounded, not only through the local sphere tangent range.
+- A blocker inside observed DEM can certify blocked only under the chosen sample/interpolation model. Boundary crossing, pixel footprint, nodata/quality holes, and radial search termination must propagate unknown where they could conceal an obstruction.
+- A ray/profile/rendering comparison should consume identical spherical xyz geometry, with origin at actual observer position (R + DEM ground height)u, not the h=0 reference-sphere point. Distinguish app observer height from terrain ground elevation so the center site is not treated as 388.6m above ground.
+- A directional horizon/profile should state azimuth binning/resolution and radial extent; a 101-cell grid’s angular gaps/diagonal footprint mean some azimuth ranges terminate sooner than others. Do not treat the square grid as a circularly complete horizon.
+
+Terrain source code status
+At review time, prepare_terrain.py and JSON are present, but src/science/terrain.ts had not yet appeared in this worktree file list. Therefore this review verifies the source window and coordinate packaging, not ray/profile/event classification implementation. t1p has been sent the source evidence and asked to provide quality-layer limitations and finite-coverage semantics.
+
+Independent verdict
+Source window, raw values, pixel-center handling, geodetic conversion and spherical xyz packaging PASS. Terrain science integration remains pending until terrain.ts exists and finite coverage/quality is validated. Required acceptance: no-hit at patch edge or outside coverage must not become clear; frame/observer position must be explicit; no claims of full horizon visibility from the sphere tangent bound alone.

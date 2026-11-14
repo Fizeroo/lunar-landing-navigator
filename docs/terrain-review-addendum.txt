@@ -1,0 +1,22 @@
+﻿Terrain ray edge-case review addendum
+Date: 2026-11-14. Reviewer: t1q, read-only.
+Artifact/code: t1p worktree terrain.ts and staged PGDA90 patch.
+
+Concrete blocker found after the initial report:
+At the vetted observer site, call analyzeTerrainHorizon(patch, site, observerHeightM=0, azDeg=0, targetAltDeg=...). Observed:
+- target altitude -90, -89, -45 degrees => status insufficient, no blocker.
+- target altitude -5, -1, 0, +1 degrees => status blocked by farther mesh triangles.
+The observer is at a sampled terrain vertex with zero clearance. A downward ray enters the local surface at distance zero. rayTriangle intentionally discards distance <=0.5m, so it drops the self-surface intersection and can return insufficient for an obviously ground-intersecting direction. For a site known to lie on the DEM surface, classify strictly downward rays as blocked by local ground/self-surface (or implement a robust origin-surface rule); add h=0 down/tangent/up tests. I sent this finding directly to t1p.
+
+Finite-coverage handling:
+The current terrain ray API has no clear return path: when no triangle intersection is found it returns insufficient, including directions that cross the finite patch boundary. This is conservative and avoids false “clear” from the sphere tangent range. A local triangle hit returns blocked. Preserve that behavior. The smooth sphere block is separately named in the reason string; UI should label it as smooth reference-sphere geometry, not DEM-confirmed terrain obstruction.
+
+Prior artifact validation remains valid:
+Live PGDA90 ranged extraction and exact source-window bytes/hash matched; pixel-center inverse projection and xyz reconstruction independently matched exactly. The patch has 0 NaN cells but no companion LDEC/effective-resolution/error layers, so valid-cell count alone does not prove observational support/quality.
+Terrain ray oracle update — 2026-11-14
+Independent Python Moller-Trumbore against the packaged 101x101 XYZ triangles:
+- h=250m, az=0, alt=-89deg: first hit 250.5030992769727m, exactly matching analyzeTerrainHorizon.
+- h=0 at the vetted source vertex: alt=-90 and -20deg intersect at the origin (t≈3.6e-13m / 1.35e-12m); before t1p fix, the 0.5m self-hit exclusion returned insufficient. Latest staged code adds localSurfaceBlocks and now returns blocked for h=0, alt -90/-89/-45/0 tests.
+- h=0, az=55, alt=-1deg and h=1000, az=0, alt=-5deg have no hit in the finite patch; latest code returns insufficient, correctly avoiding a sphere-only false block and an unsupported clear claim.
+Latest focused staging tests pass 6/6, and strict TypeScript check over science modules passes. No clear classification is emitted for this finite patch. The terrain tests assert no hit => insufficient and origin-ground => blocked.
+Current integration caveat: main-repo still has older terrain.ts/JSON and no terrain.test.mjs at last hash comparison; it needs explicit sync with latest staging files. Root UI currently reads horizonAltDeg; latest staging exposes both altDeg and horizonAltDeg to preserve that consumer.

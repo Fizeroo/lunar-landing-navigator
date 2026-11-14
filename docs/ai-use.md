@@ -1,0 +1,9 @@
+# AI assistance and verification disclosure
+
+Claude Code served as the primary implementation assistant for the interface, three.js scene, interactions, viewing modes, scenario management and visual refinement. Codex assisted with architecture, offline SPICE data preparation, mathematical modules, automated tests, independent code/numerical review, integration and browser acceptance. A human project owner supplied the product goals, approved scope and retains responsibility for release and submission.
+
+Generated code and documentation were reviewed against explicit contracts and exercised with real prepared data. Checks include direct CSPICE reference fixtures, independent analytic interval cases, JPL Horizons comparisons, coordinate/frame tests, invalid/coverage-boundary cases, and actual browser interactions. Horizons/SPICE checks use related astronomical models and are **not independent observations of the sky**. Automated passing tests do not prove landing safety or operational communication/power availability. Final acceptance and limitations are recorded with this delivery.
+
+No AI-generated image or random elevation field is used as scientific terrain data. Numerical values must originate from the documented SPICE/LOLA pipeline. The assistants must not be credited as NASA staff or NASA approval.
+
+Include this disclosure with the submission. A Nov12,2026 answer labeled Navigator in the [NASA Space Apps discussion1947](https://github.com/nasa/spaceapps/discussions/1947) says to disclose all AI use and watermark generative images/video. It is supplemental2026 guidance; the exact current form field/wording remains unverified. No generative image/video asset is used for the scientific scenes: they are rendered from SPICE/LOLA data by AI-assisted code. A later promotional generative asset would need separate labeling and a rights check.

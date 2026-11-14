@@ -1,0 +1,32 @@
+﻿REVIEW-SCIENCE-GATE — t1q — 2026-11-14
+Verdict: PASS numerical scientific slice in worktrees/codex as inspected. Browser/source-light/UI integration gate remains PENDING, not covered by this pass.
+Read-only execution only: PowerShell Get-Content/Get-FileHash, Python stdin with .venv\Scripts\python.exe, Node24 --experimental-strip-types --input-type=module stdin/subprocess. Did NOT execute generate.py or validate.py because these write project artifacts. No project/Git modifications by reviewer.
+
+Reviewed docs/implementation-plan.md, docs/data-contract.md and src/contracts.ts in main; scripts/ephemeris/generate.py, kernels.lock.json, validate.py, src/science/index.ts and real public/data/ephemeris-2026-11.json in developer worktree. No current scientific blocker. BodyObservation.direction is demonstrably topocentric in body frame from source; source body direction normalized separately. Generator fetches official HTTPS URLs with verification enabled, checks bytes+sha256 against lock, no synthetic fallback.
+
+Inspected artifact SHA256:
+public/data/ephemeris-2026-11.json: 51AD747EF9A9E6281F811D205A0F542199D2632AFACB1FEEA8937D88FE4EFD5D
+src/science/index.ts: 2FDCC6BFE98CA1700BDDC829ED79C6DA180BDAC1E6035210B6A005DD607A20B3
+scripts/ephemeris/generate.py: 7D5D03337D005E24E1F91887FFAAE4892A381567396B2DE37061FD26624B23EB
+Recheck hashes upon integration; later edits require relevant recheck.
+
+Independent actual results:
+- Own CSPICE runtime: SpiceyPy8.0.2, CSPICE_N0067. All5 kernel bytes/SHA256 independently computed and matched pinned lock. de440s.bsp32,726,016 bytes; lunar BPC12,863,488 bytes.
+- Independently read SPK coverage for IDs3/10/301/399 and BPC class31008; intersection matches dataset: ET[-4734072000,4735368000]. Exact ME frame resolves31009. pxform orthogonality/determinant checked at400 random times (error<1e-12).
+- 4322 dataset rows strictly increasing. Exact UTC start Nov1 00Z and Dec1 00Z agree with direct str2et and dataset ET endpoints. Final grid step0.0005606413s, reflecting ET/UTC interval mismatch; endpoint and lookup checked explicitly. No extrapolation.
+- Five selected JSON nodes incl both endpoints vs direct spkpos(10/399, ET, exact ME, NONE,301)*1000: residual0 metres.
+- Independent Horizons HTTP200 serial requests saved gate-horizons-10.json and gate-horizons-399.json beside this note. Explicit TIME_TYPE=UT, geometric ICRF/FRAME, observer500@301, Nov1/Nov16/Dec1. Service header DE441 vs local DE440: vector difference2.15..2.66m; Earth angular difference<=3.794e-7deg, Sun<=4.772e-10deg. This checks JPL consistency, not independent observed truth.
+- Independent Python interpolation/direct-SPICE test400 random epochs x8 sites x2 bodies=6400 directions: maximum angular error3.48065e-6deg; altitude3.46706e-6deg; angular-radius7.34896e-8deg. Includes near/far side, near poles, exact poles, longitude seam.
+- Actual TypeScript observeAt executed via Node, then compared with direct Python CSPICE (not another copy of interpolation):180 deterministic random epochs x8 sites x2 bodies=2880 directions: angular error3.421197696e-6deg, altitude3.410367370e-6deg, disk-radius7.352351822e-8deg. Below proposed0.001deg on exercised cases, not a mathematical global bound.
+- Independent ENU using cross(up,east) for north vs actual TS at4 sites Nov14UTC: max az/alt residual1.537e-10deg. Example lat-89/lon0: direct Sun az126.64074643487908 alt0.9599472060730619; Earth az358.77429032501567 alt-3.648789531543589. Earth surface subtraction exercised, not ignored.
+- All4322 sample UTC->ET matched stored ET exactly in JS. Actual TS UTC output vs CSPICE str2et across random observations <=0.00049794s (output rounds milliseconds). This is observed label error on tested dates; no fixed offset approximation claimed.
+- Node checks rejected Nov31, missing Z, second60, outside coverage, nonzero site height. Pole azimuth null for both bodies at start/end/near-end. Source rejects NaN/invalid site, wrong model, nonincreasing rows and gaps>600.001s. Disk radius and threshold formulas follow contract.
+
+Limitations / remaining review:
+- Runtime provenance validator only requires object shape for provenance; checked bundled artifact has actual lock/coverage/time/source metadata. This is not a cryptographic trust guarantee for arbitrary third-party JSON; bundled controlled data only.
+- Exact kernel source authenticity relies on verified HTTPS fetch plus locked bytes; I compared local file hashes to lock, not a separately published signed official SHA256 manifest.
+- Developer validation script has not been run by reviewer (writes project fixtures); my own calculations used stdin and independent formulas. Developer tests/build and final artifacts are still being completed.
+- Must check integrated main contains same bytes or review changes; scientific slice PASS does not pass frontend. Still to inspect source light direction, proper scene transform, camera independence, click/UTC endpoints, no fake fallback, visible h0/NONE/no-terrain/no-occultation limitations and browser numerical consistency.
+- Full challenge text remains unverified; no competition-compliance claim.
+
+No implementation edits, commits, branches/worktrees, dependencies or new agents created by reviewer. Available for integrated review.

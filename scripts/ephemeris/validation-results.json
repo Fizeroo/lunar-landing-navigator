@@ -1,0 +1,90 @@
+{
+  "offline": {
+    "offGridEpochs": 8642,
+    "sitesPerEpoch": 7,
+    "bodiesPerEpoch": 2,
+    "maxTopocentricAngularErrorDeg": 3.489777408568521e-06,
+    "maxAltitudeErrorDeg": 3.476710119798554e-06,
+    "maxAngularRadiusErrorDeg": 7.352791597803332e-08,
+    "maxUtcToEtErrorSeconds": 1.0728836059570312e-06,
+    "worstCase": {
+      "et": 848567169.1825113,
+      "body": "399",
+      "latDeg": 0,
+      "lonDeg": 0
+    },
+    "elapsedSeconds": 68.54099560000759,
+    "directAzlcpoFixtures": 28
+  },
+  "horizons": {
+    "samples": [
+      {
+        "body": "10",
+        "jdTdb": 2461345.500800724,
+        "et": 846763269.1825658,
+        "differenceM": 2.36935190648962,
+        "angularErrorDeg": 2.620133799648084e-10,
+        "maxTopocentricAngularErrorDeg": 2.6202299524408197e-10
+      },
+      {
+        "body": "10",
+        "jdTdb": 2461358.500800726,
+        "et": 847886469.1827267,
+        "differenceM": 2.194885861697518,
+        "angularErrorDeg": 5.232192470630157e-10,
+        "maxTopocentricAngularErrorDeg": 5.232298927030148e-10
+      },
+      {
+        "body": "10",
+        "jdTdb": 2461375.025059989,
+        "et": 849314165.1830659,
+        "differenceM": 2.374469143480214,
+        "angularErrorDeg": 2.1794297012420716e-10,
+        "maxTopocentricAngularErrorDeg": 2.1794525658065027e-10
+      },
+      {
+        "body": "10",
+        "jdTdb": 2461375.50080073,
+        "et": 849355269.1830888,
+        "differenceM": 2.3569597665635738,
+        "angularErrorDeg": 1.3247540556008337e-10,
+        "maxTopocentricAngularErrorDeg": 1.3248174548565892e-10
+      },
+      {
+        "body": "399",
+        "jdTdb": 2461345.500800724,
+        "et": 846763269.1825658,
+        "differenceM": 2.3850938659967373,
+        "angularErrorDeg": 3.6916374555921087e-07,
+        "maxTopocentricAngularErrorDeg": 3.708947706028858e-07
+      },
+      {
+        "body": "399",
+        "jdTdb": 2461358.500800726,
+        "et": 847886469.1827267,
+        "differenceM": 2.2218673391675905,
+        "angularErrorDeg": 3.138713236834217e-07,
+        "maxTopocentricAngularErrorDeg": 3.152170743287093e-07
+      },
+      {
+        "body": "399",
+        "jdTdb": 2461375.025059989,
+        "et": 849314165.1830659,
+        "differenceM": 2.4036604182071977,
+        "angularErrorDeg": 3.6750237496872343e-07,
+        "maxTopocentricAngularErrorDeg": 3.691945771335733e-07
+      },
+      {
+        "body": "399",
+        "jdTdb": 2461375.50080073,
+        "et": 849355269.1830888,
+        "differenceM": 2.3859340117343506,
+        "angularErrorDeg": 3.6246398825453223e-07,
+        "maxTopocentricAngularErrorDeg": 3.6412055552082426e-07
+      }
+    ],
+    "maxDifferenceM": 2.4036604182071977,
+    "maxAngularErrorDeg": 3.6916374555921087e-07,
+    "modelNote": "SPICE DE440 vs current Horizons service ephemeris (see saved headers); shared JPL family, not independent observations."
+  }
+}
