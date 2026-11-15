@@ -57,6 +57,16 @@ export function bodyToLocalScene(direction: Vec3, latDeg: number, lonDeg: number
   return target.set(east, up, -north);
 }
 
+/** Inverse of the rendering ENU rotation. Used for walking and the moving compass. */
+export function localSceneToBody(v:Vector3,latDeg:number,lonDeg:number):Vec3 {
+  const p=latDeg*DEG,l=lonDeg*DEG;
+  return [
+    -Math.sin(l)*v.x+Math.cos(p)*Math.cos(l)*v.y+Math.sin(p)*Math.cos(l)*v.z,
+    Math.cos(l)*v.x+Math.cos(p)*Math.sin(l)*v.y+Math.sin(p)*Math.sin(l)*v.z,
+    Math.sin(p)*v.y-Math.cos(p)*v.z,
+  ];
+}
+
 /** Unit view direction in the local surface scene for a compass heading and pitch (degrees). */
 export function headingPitchToLocal(headingDeg: number, pitchDeg: number, target = new Vector3()): Vector3 {
   const h = headingDeg * DEG;

@@ -59,3 +59,23 @@ export function formatLatLon(latDeg: number, lonDeg: number): string {
   const lon = `${Math.abs(lonDeg).toFixed(4)}° ${lonDeg < 0 ? 'W' : 'E'}`;
   return `${lat}, ${lon}`;
 }
+
+/** Seconds until an event -> "in ≈ 3 d 4 h"; zero or negative -> "now". */
+export function formatCountdown(seconds: number): string {
+  if (!Number.isFinite(seconds)) return '';
+  if (seconds < 30) return 'now';
+  return `in ${formatDuration(seconds)}`;
+}
+
+/** Metres -> "0 m", "250 m", "2.5 km". */
+/** Eye height above the local ground: one decimal below 10 m, so 1.7 m is not shown as "2 m". */
+export function formatEyeHeight(metres: number): string {
+  if (!Number.isFinite(metres)) return '—';
+  return Math.abs(metres) < 10 ? `${metres.toFixed(1)} m` : formatHeight(metres);
+}
+
+export function formatHeight(metres: number): string {
+  if (!Number.isFinite(metres)) return '—';
+  if (Math.abs(metres) < 1000) return `${Math.round(metres)} m`;
+  return `${(metres / 1000).toFixed(metres % 1000 === 0 ? 0 : 1)} km`;
+}

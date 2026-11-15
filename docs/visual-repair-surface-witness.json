@@ -1,0 +1,57 @@
+﻿{
+  "checkedAgainst": "main-repo/src/scene/context.ts",
+  "utcRequested": "2026-11-24T04:00:00Z",
+  "utcReturned": "2026-11-24T04:00:00.000Z",
+  "etSecondsTdb": 848764869.1829153,
+  "observerHeightM": 1.7,
+  "sourceVertex": {
+    "row": 12,
+    "col": 60
+  },
+  "site": {
+    "latDeg": -88.89822426645465,
+    "lonDeg": 1.440668007133082,
+    "heightAboveReferenceSphereM": 0
+  },
+  "groundHeightM": -265.98144531273283,
+  "coverageMarginM": 959.9999999951469,
+  "slopeDeg": 6.65701248122213,
+  "triangles": {
+    "stitchedContext": 20160,
+    "globalHost": 157200
+  },
+  "sun": {
+    "azDeg": 1.5857983652866778,
+    "altDeg": 2.6247732328654183,
+    "directionBody": [
+      0.9982533044267459,
+      0.05275934865979076,
+      -0.026585547390964696
+    ],
+    "detailedStatus": {
+      "status": "insufficient",
+      "reason": "No local DEM intersection was found; the finite patch cannot exclude more distant lunar relief.",
+      "obstructionAltDeg": null,
+      "limitingDistanceM": null
+    },
+    "stitchedContextRayHitM": null,
+    "globalHostRayHitM": null
+  },
+  "earth": {
+    "azDeg": 355.2363584091526,
+    "altDeg": 7.351007539163401,
+    "directionBody": [
+      0.9923901855340636,
+      -0.0574306489664409,
+      -0.10891942074286066
+    ],
+    "detailedStatus": {
+      "status": "insufficient",
+      "reason": "No local DEM intersection was found; the finite patch cannot exclude more distant lunar relief.",
+      "obstructionAltDeg": null,
+      "limitingDistanceM": null
+    },
+    "stitchedContextRayHitM": null,
+    "globalHostRayHitM": null
+  }
+}

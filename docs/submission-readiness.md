@@ -1,6 +1,6 @@
 # Submission readiness: evidence and remaining actions
 
-Checked 2026-11-14. This is a local preparation package, not a submitted entry. No publication, push, registration, acceptance of terms or submission was performed.
+Checked 2026-11-14. This is a local preparation package, not a submitted entry. This research record predates the final authorized source commit/push. Website publication, registration, acceptance of terms and competition submission are separate entrant actions.
 
 | Item | Evidence status | Project action / remaining work |
 |---|---|---|
@@ -11,7 +11,7 @@ Checked 2026-11-14. This is a local preparation package, not a submitted entry. 
 | Exact form fields, character limits and judging rubric | Unknown: authenticated2026 submission form not inspected | Do not invent numeric limits; adapt prepared English materials after checking actual fields |
 | Demo length/format | Supplemental2026 evidence: a Nov12 answer labeled Navigator in the [NASA Space Apps repository discussion1947](https://github.com/nasa/spaceapps/discussions/1947) specifies a video at most30seconds or a presentation at most7slides | Prepare a separate30second pitch or7slide deck; the requested one-minute local walkthrough is not a claim of compliance with this shorter submission format. Verify actual form/participant guide |
 | AI disclosure | Same Navigator answer says disclose all AI use and visibly watermark generative images/videos | Include [AI disclosure](ai-use.md). Exact current form fields remain unknown; code-rendered scientific scenes are distinguished from generated media |
-| Required public hosting/source links | Exact form requirement unverified | No deployment or push authorized for this task; local working app and reproducible run instructions prepared |
+| Required public hosting/source links | Exact form requirement unverified | Source commit/push is authorized for finalization; website deployment is not included. Local working app and reproducible instructions are prepared |
 | NASA endorsement | Not granted or implied | Use source attribution, not an endorsement claim |
 
 The participant terms require rights to submitted content, suitable licensing, and source/license documentation. They identify an Apache-2.0 default for original material when no OSI license is specified. A prepared proposal does not establish ownership. Review [licensing.md](licensing.md) and all applicable data credits before release.

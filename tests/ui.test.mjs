@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { compassPoint, formatDuration, formatLatLon, formatPercent, formatSignedDeg, formatUtcMinute, formatUtcSecond } from '../src/ui/format.ts';
 import { ALTITUDE_GRID_DEG, altitudeToUnit, azimuthToUnit } from '../src/ui/skyProjection.ts';
 import { SAME_THRESHOLD_POINTS, buildConclusion, compareCondition } from '../src/ui/comparison.ts';
-import { PRESETS, findPreset } from '../src/ui/presets.ts';
+import { CATALOGUE as PRESETS, findCatalogueEntry as findPreset } from '../src/ui/catalogue.ts';
 import { validateEphemeris } from '../src/science/index.ts';
 import { analyzeSite } from '../src/science/intervals.ts';
 

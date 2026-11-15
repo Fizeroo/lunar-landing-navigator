@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "datasetId": "de440-me421-geometric-2026-10_2027-02-v1",
+  "title": "Shackleton-area 48-hour joint visibility what-if",
+  "baseline": {
+    "site": {
+      "latDeg": -89.67,
+      "lonDeg": 129.78,
+      "heightAboveReferenceSphereM": 0
+    },
+    "siteName": "Shackleton-area illustrative point",
+    "observerHeightM": 0,
+    "model": "reference-sphere",
+    "condition": "both",
+    "requiredSeconds": 172800,
+    "rangeStartUtc": "2026-10-01T00:00:00Z",
+    "rangeEndUtc": "2027-02-01T00:00:00Z",
+    "startUtc": "2026-11-16T21:00:00Z"
+  },
+  "change": {
+    "kind": "start-plus-1-day",
+    "startUtc": "2026-11-17T21:00:00Z"
+  },
+  "expected": {
+    "baseline": {
+      "requirementMet": false,
+      "availableSeconds": 0,
+      "endReason": "conditions-not-met"
+    },
+    "alternative": {
+      "requirementMet": true,
+      "availableSeconds": 1036066.5514421463,
+      "endReason": "earthset"
+    }
+  }
+}

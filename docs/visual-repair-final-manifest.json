@@ -1,0 +1,124 @@
+{
+  "bundle": "index-CheoBTg2.js",
+  "bundleSha256": "c4b053b3cd6b431aa7950452a0d117a378e5f2b94d61ec1acfc318ef28c900e6",
+  "protectedBaselineChecks": [
+    {
+      "path": "src/contracts.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/index.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/observer.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/intervals.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/events.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/mission.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/terrain.ts",
+      "unchanged": true
+    },
+    {
+      "path": "src/science/candidates.ts",
+      "unchanged": true
+    },
+    {
+      "path": "public/data/terrain-pgda90-southpolar.json",
+      "unchanged": true
+    },
+    {
+      "path": "public/data/ephemeris-2026-10_2027-02.json",
+      "unchanged": true
+    }
+  ],
+  "runtimeFiles": [
+    {
+      "path": "public/assets/earth_bmng_200401_4k.jpg",
+      "sha256": "f4d593802e3f547adbdd74718401b86c93ae220e2a49722d7dec9e94939cba5f"
+    },
+    {
+      "path": "public/assets/starmap_2020_4k.jpg",
+      "sha256": "9bf63ab9a3512813e2ce36af63938fd9a35c71ab42935cb7c5eb0523b6f47684"
+    },
+    {
+      "path": "public/data/visual-context-lola-global-4ppd.bin",
+      "sha256": "c987e22061e94b72f2b43422d0b86e8b90f4cb9ccd24aa566acc539df4c0d34c"
+    },
+    {
+      "path": "public/data/visual-context-lola-global-4ppd.json",
+      "sha256": "ff0da6608ce9f48690aefa311525ed47d0e54f08c789307c1ed69689a5c7e427"
+    },
+    {
+      "path": "public/data/visual-context-pgda90-80km.json",
+      "sha256": "8b2b10906d6a5f8cffc21a95e4d467033b5eecefdf2b0fa73365258808baa4f8"
+    },
+    {
+      "path": "scripts/assets/convert_earth.py",
+      "sha256": "1da99e9cf7883e4573ca5ba90511afe0380048694c502a8ce754edb368d4ee1a"
+    },
+    {
+      "path": "scripts/assets/convert_starmap.py",
+      "sha256": "b4c5383ad5cbe4ca1f25f5d3aa281d0c39dd947221db2193b3a5ee1bcb8ff2d0"
+    },
+    {
+      "path": "src/main.ts",
+      "sha256": "c133a35e84a2f8997f65a6d4ec20c5b9dd26ce3b0adc5ad6c98c4024cd940fd8"
+    },
+    {
+      "path": "src/scene/MoonScene.ts",
+      "sha256": "653432cebde1b259892565d3bc8776d58a675547051f985122a4cd63f04443a2"
+    },
+    {
+      "path": "src/scene/SurfaceScene.ts",
+      "sha256": "bd23b3313a37e3c41ba461a1ab0e3387259332886d54b5a27de5d29c3d10517b"
+    },
+    {
+      "path": "src/scene/bodies.ts",
+      "sha256": "11e55c53a3f3487c544436734ec0548809f54142cd0feaf4f426636efa7522cf"
+    },
+    {
+      "path": "src/scene/context.ts",
+      "sha256": "5a2c48b1a21552047d03642e8cc4c7b0d1c7d7d677fda41f9e73dd2b7bd1c1f4"
+    },
+    {
+      "path": "src/scene/hostGeometry.ts",
+      "sha256": "a9ad5f89ca4a758b598fe2e787e4fba60d7db09a2b3422c7072c0d299869c3ab"
+    },
+    {
+      "path": "src/scene/sky.ts",
+      "sha256": "1be0cdef416ee159ad8e9b7db425e63758d065741a473872b17b73a2b3ad9730"
+    },
+    {
+      "path": "src/scene/transition.ts",
+      "sha256": "f1ad1c8d09db949de138bfd6ccd46d1afcb4c0080aeab0b6a5205ef234cd6b5e"
+    },
+    {
+      "path": "src/science/candidate-assessment.ts",
+      "sha256": "dcade367d0b31f391aaf1b66f0dfde0036d4da92c0b21f85c1b2c3668f9549d1"
+    },
+    {
+      "path": "src/style.css",
+      "sha256": "11f4c2497cadae1efb5bb090dc6c234d6ba9280531b48dd374866e43fd521bc1"
+    },
+    {
+      "path": "src/ui/CandidatesPanel.ts",
+      "sha256": "bf4c8c6a5fb5d1be08317437fe2d0b8d2420ba2570a0d9cbb690760ebf106ae5"
+    },
+    {
+      "path": "tests/visual-context.test.mjs",
+      "sha256": "b2b7a03eef1b44b7adf257809f2a33e76d0d02e2df87c96f9b7199a2d839ef3f"
+    }
+  ]
+}

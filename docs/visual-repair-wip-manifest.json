@@ -1,0 +1,62 @@
+﻿[
+    {
+        "path":  "src/main.ts",
+        "sha256":  "ed5c52928a47513f4e914de32f60bc72d8cfe750a5d86275fcd2df080729ba73"
+    },
+    {
+        "path":  "src/style.css",
+        "sha256":  "11f4c2497cadae1efb5bb090dc6c234d6ba9280531b48dd374866e43fd521bc1"
+    },
+    {
+        "path":  "src/scene/bodies.ts",
+        "sha256":  "2be55bed23d8c419a8086dbfb9a4b5557bc83a486de30185634a259ae054879c"
+    },
+    {
+        "path":  "src/scene/context.ts",
+        "sha256":  "0747d57738aae843ac4feb4706bee1b7825a8b19a04cf6402b4bf17d8f6ce3c1"
+    },
+    {
+        "path":  "src/scene/hostGeometry.ts",
+        "sha256":  "a9ad5f89ca4a758b598fe2e787e4fba60d7db09a2b3422c7072c0d299869c3ab"
+    },
+    {
+        "path":  "src/scene/MoonScene.ts",
+        "sha256":  "653432cebde1b259892565d3bc8776d58a675547051f985122a4cd63f04443a2"
+    },
+    {
+        "path":  "src/scene/sky.ts",
+        "sha256":  "1be0cdef416ee159ad8e9b7db425e63758d065741a473872b17b73a2b3ad9730"
+    },
+    {
+        "path":  "src/scene/SurfaceScene.ts",
+        "sha256":  "ef40a4ed5e05025cf988c060a2a75353364f4c67f6edc8f6b6c3821500a3ec20"
+    },
+    {
+        "path":  "src/scene/transition.ts",
+        "sha256":  "f1ad1c8d09db949de138bfd6ccd46d1afcb4c0080aeab0b6a5205ef234cd6b5e"
+    },
+    {
+        "path":  "src/ui/CandidatesPanel.ts",
+        "sha256":  "bf4c8c6a5fb5d1be08317437fe2d0b8d2420ba2570a0d9cbb690760ebf106ae5"
+    },
+    {
+        "path":  "scripts/assets/convert_earth.py",
+        "sha256":  "1da99e9cf7883e4573ca5ba90511afe0380048694c502a8ce754edb368d4ee1a"
+    },
+    {
+        "path":  "scripts/assets/convert_starmap.py",
+        "sha256":  "b4c5383ad5cbe4ca1f25f5d3aa281d0c39dd947221db2193b3a5ee1bcb8ff2d0"
+    },
+    {
+        "path":  "tests/visual-context.test.mjs",
+        "sha256":  "b2b7a03eef1b44b7adf257809f2a33e76d0d02e2df87c96f9b7199a2d839ef3f"
+    },
+    {
+        "path":  "public/assets/earth_bmng_200401_4k.jpg",
+        "sha256":  "f4d593802e3f547adbdd74718401b86c93ae220e2a49722d7dec9e94939cba5f"
+    },
+    {
+        "path":  "public/assets/starmap_2020_4k.jpg",
+        "sha256":  "9bf63ab9a3512813e2ce36af63938fd9a35c71ab42935cb7c5eb0523b6f47684"
+    }
+]

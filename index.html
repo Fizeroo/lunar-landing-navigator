@@ -9,95 +9,97 @@
   </head>
   <body>
     <div class="app">
-      <header class="topbar">
-        <div class="brand">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <h1>Lunar Landing Navigator</h1>
-        </div>
-        <div class="view-tabs" role="tablist" aria-label="View">
-          <button type="button" role="tab" class="tab" id="tab-overview" aria-selected="true" title="Rotate the Moon and place sites">Moon overview</button>
-          <button type="button" role="tab" class="tab" id="tab-space" aria-selected="false" title="Sun, Earth and Moon together, from the same ephemeris">Space view</button>
-          <button type="button" role="tab" class="tab" id="tab-surface" aria-selected="false" title="Stand at the active site and look around">Surface view</button>
-        </div>
-        <div class="top-actions">
-          <span class="status" id="data-status" role="status" aria-live="polite">Loading ephemeris…</span>
-          <button type="button" class="btn" id="open-catalogue" title="Choose a named site for A or B">Site catalogue</button>
-          <button type="button" class="btn" id="open-scenarios" title="Saved comparison scenarios">Scenarios</button>
+      <!-- The scene fills the whole window; everything else floats over it. -->
+      <main class="stage viewport" aria-label="3D view">
+        <div class="canvas-host" id="scene"></div>
+        <div class="canvas-host surface-host" id="surface" hidden></div>
+        <div class="fade" id="view-fade" aria-hidden="true"></div>
+
+        <header class="hud hud-top-left">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <h1>Lunar Landing Navigator</h1>
+          </div>
+          <div class="view-tabs" role="tablist" aria-label="View">
+            <button type="button" role="tab" class="tab" id="tab-overview" aria-selected="true" title="The Moon from orbit: rotate it and choose a point">Orbit</button>
+            <button type="button" role="tab" class="tab" id="tab-surface" aria-selected="false" title="Stand at the selected point and look around">Surface</button>
+          </div>
+        </header>
+
+        <div class="hud hud-top-right">
+          <button type="button" class="btn primary" id="find-candidates" title="Evaluate a set of points in the prepared region and show up to three candidates">Find a landing candidate</button>
+          <button type="button" class="btn" id="open-analysis" aria-expanded="false" aria-controls="analysis" title="Mission window, Sites A and B, scenarios, timelines and comparison">Analysis</button>
           <button type="button" class="btn" id="open-data" title="Dataset, model, accuracy and sources">Data &amp; accuracy</button>
+          <button type="button" class="btn quiet" id="tab-space" aria-pressed="false" title="Sun, Earth and Moon together (schematic sizes and distances)">Space view</button>
         </div>
-      </header>
 
-      <main class="workspace">
-        <section class="viewport" aria-label="3D view">
-          <div class="canvas-host" id="scene"></div>
-          <div class="canvas-host surface-host" id="surface" hidden></div>
-          <div class="fade" id="view-fade" aria-hidden="true"></div>
+        <section class="hud point-card" id="point-card" aria-label="Selected point"></section>
+        <section class="hud candidates" id="candidates" aria-label="Landing candidates" hidden></section>
 
-          <div class="view-layer" id="layer-overview">
-            <div class="view-tools" role="group" aria-label="Camera views">
-              <button type="button" class="chip" id="view-south" title="Look at the south polar region">South pole</button>
-              <button type="button" class="chip chip-a" id="view-a" title="Move the camera above Site A">Site A</button>
-              <button type="button" class="chip chip-b" id="view-b" title="Move the camera above Site B">Site B</button>
-              <button type="button" class="chip" id="view-near" title="Look at the Earth-facing side">Near side</button>
-            </div>
-            <p class="hint" id="pick-hint" aria-live="polite"></p>
-            <div class="legend" aria-label="Legend">
-              <span><i class="dot dot-a"></i>Site A</span>
-              <span><i class="dot dot-b"></i>Site B</span>
-              <span><i class="dot dot-sun"></i>Direction to the Sun</span>
-              <span><i class="dot dot-earth"></i>Direction to Earth</span>
-              <span class="legend-note">Sun/Earth rays are symbolic (not real<br />distance or size). Faint night-side fill<br />light is for orientation only.</span>
-            </div>
-            <button type="button" class="btn explore" id="explore-surface" title="Fly down to the active site and look around from the surface">Explore surface ▸</button>
+        <div class="view-layer" id="layer-overview">
+          <p class="hint" id="pick-hint" aria-live="polite"></p>
+          <div class="view-tools" role="group" aria-label="Camera views">
+            <button type="button" class="chip" id="view-region" title="Look at the prepared terrain region near the south pole">Prepared region</button>
+            <button type="button" class="chip" id="view-point" title="Move the camera above the selected point">Selected point</button>
+            <button type="button" class="chip" id="view-near" title="Look at the Earth-facing side">Near side</button>
           </div>
+        </div>
 
-          <div class="view-layer" id="layer-space" hidden>
-            <p class="view-caption"><strong>Distances and sizes not to scale.</strong> Directions and lighting come from the same ephemeris as everything else. Shown in the Moon-fixed frame, so the Moon stays still and the Sun circles it about once a month; Earth’s rotation is not modelled.</p>
-          </div>
+        <div class="view-layer" id="layer-space" hidden>
+          <p class="view-caption"><strong>Distances and sizes not to scale.</strong> Directions and lighting come from the same ephemeris as everything else. Shown in the Moon-fixed frame, so the Moon stays still and the Sun circles it about once a month. Earth’s picture is illustrative; its rotation is not modelled.</p>
+        </div>
 
-          <div class="view-layer" id="layer-surface" hidden>
-            <div class="surface-top">
-              <button type="button" class="btn" id="surface-back" title="Return to the Moon overview">◂ Back to orbit</button>
-              <span class="surface-title" id="surface-title"></span>
-            </div>
-            <div class="surface-compass" id="surface-compass" aria-live="off"></div>
-            <div class="surface-panel">
-              <div class="surface-actions" role="group" aria-label="Look direction">
-                <button type="button" class="btn" id="look-sun" title="Turn toward the Sun’s real direction">Look at Sun</button>
-                <button type="button" class="btn" id="look-earth" title="Turn toward the Earth’s real direction">Look at Earth</button>
-                <button type="button" class="btn" id="look-north" title="Turn toward north">Look north</button>
+        <div class="view-layer" id="layer-surface" hidden>
+          <div class="surface-compass" id="surface-compass" aria-live="off"></div>
+          <div class="surface-panel">
+            <div class="experience" id="experience" role="group" aria-label="Mission experience playback" hidden>
+              <p class="experience-text" id="experience-text" role="status" aria-live="polite"></p>
+              <div class="experience-controls">
+                <button type="button" class="btn primary" id="experience-play" aria-pressed="false" title="Play or pause accelerated time">▶ Play</button>
+                <label class="experience-speed">Speed
+                  <select id="experience-speed" aria-label="Experience playback speed">
+                    <option value="3600">1 h per second</option>
+                    <option value="21600" selected>6 h per second</option>
+                    <option value="86400">1 d per second</option>
+                  </select>
+                </label>
+                <span class="experience-rate" id="experience-rate"></span>
+                <button type="button" class="btn" id="experience-restart" title="Return to the start of this experience">⟲ Back to start</button>
+                <button type="button" class="btn" id="experience-end" title="Hide this bar; you stay on the surface">End experience</button>
               </div>
-              <label class="surface-height">
-                <span>Observer height above the sphere</span>
-                <input type="range" id="surface-height" min="0" max="10000" step="1" value="0" aria-label="Observer height above the reference sphere, metres" />
-                <output id="surface-height-out">0 m</output>
-              </label>
-              <p class="surface-status" id="surface-status"></p>
-              <p class="surface-note" id="surface-note"></p>
             </div>
+            <div class="surface-bar" id="surface-bar">
+              <button type="button" class="btn accent" id="mouse-look" aria-pressed="false" title="Capture the mouse to look around; press Escape to release it">Enter mouse look</button>
+              <button type="button" class="btn" id="return-point" title="Go back to the selected point where you entered the surface">Return to point</button>
+              <div class="surface-actions" role="group" aria-label="Look at">
+                <span class="group-label">Look at</span>
+                <button type="button" class="btn" id="look-sun" aria-label="Look at Sun" title="Turn toward the Sun’s calculated direction, even when it is hidden">Sun</button>
+                <button type="button" class="btn" id="look-earth" aria-label="Look at Earth" title="Turn toward the Earth’s calculated direction, even when it is hidden">Earth</button>
+                <button type="button" class="btn" id="look-relief" aria-label="Look at terrain" title="Turn toward the most prominent measured relief seen from here">Terrain</button>
+                <button type="button" class="btn" id="look-north" aria-label="Look north" title="Turn toward north">North</button>
+              </div>
+              <div class="sky-toggle" role="group" aria-label="Sky appearance (does not change any calculation)">
+                <span class="group-label">Sky</span>
+                <button type="button" class="btn seg" id="sky-natural" aria-pressed="true" title="Sunlit-surface exposure: a black sky">Natural</button>
+                <button type="button" class="btn seg" id="sky-enhanced" aria-pressed="false" title="Artistic stars and Milky Way at long-exposure brightness; appearance only">Enhanced</button>
+              </div>
+              <details class="fold surface-about">
+                <summary><span class="fold-title">About this view</span></summary>
+                <p class="surface-note" id="surface-note"></p>
+              </details>
+            </div>
+            <p class="surface-keys" id="surface-keys"></p>
           </div>
+        </div>
 
-          <div class="overlay" id="scene-overlay" role="alert" hidden></div>
-        </section>
-
-        <section class="sites" id="sites" aria-label="Sites A and B"></section>
-      </main>
-
-      <section class="timepanel" aria-label="Time and comparison">
-        <div class="time-controls">
-          <form class="period-form" id="period-form" novalidate>
-            <span class="group-label">Period, UTC</span>
-            <input id="period-start" type="text" spellcheck="false" autocomplete="off" aria-label="Comparison period start, UTC, ISO 8601 ending in Z" placeholder="2026-11-01T00:00:00Z" disabled />
-            <span class="to">to</span>
-            <input id="period-end" type="text" spellcheck="false" autocomplete="off" aria-label="Comparison period end, UTC, ISO 8601 ending in Z" placeholder="2026-12-01T00:00:00Z" disabled />
-            <button type="submit" class="btn" id="period-apply" title="Analyse both sites over this period" disabled>Apply</button>
-            <button type="button" class="btn" id="period-full" title="Use the whole prepared dataset" disabled>Full range</button>
-          </form>
+        <section class="hud timebar" aria-label="Time">
           <form class="utc-form" id="utc-form" novalidate>
-            <span class="group-label">Time, UTC</span>
+            <span class="group-label">UTC</span>
             <input id="utc-input" type="text" spellcheck="false" autocomplete="off" aria-label="Current time, UTC, ISO 8601 ending in Z" placeholder="2026-11-15T12:00:00Z" disabled />
             <button type="submit" class="btn" id="utc-apply" title="Jump to this time" disabled>Go</button>
+            <button type="button" class="btn" id="time-now" title="Use the actual current UTC instant if covered by the prepared data">Now</button>
           </form>
+          <input id="time-slider" class="slider" type="range" min="0" max="1" step="any" value="0" aria-label="Current time within the period" disabled />
           <div class="playback" role="group" aria-label="Playback">
             <button type="button" class="btn icon" id="step-back-day" title="Back 1 day" aria-label="Back 1 day" disabled>−1 d</button>
             <button type="button" class="btn icon" id="step-back-hour" title="Back 1 hour" aria-label="Back 1 hour" disabled>−1 h</button>
@@ -105,31 +107,59 @@
             <button type="button" class="btn icon" id="step-fwd-hour" title="Forward 1 hour" aria-label="Forward 1 hour" disabled>+1 h</button>
             <button type="button" class="btn icon" id="step-fwd-day" title="Forward 1 day" aria-label="Forward 1 day" disabled>+1 d</button>
             <select id="speed" aria-label="Playback speed" title="Playback speed" disabled>
+              <option value="600">10 min / s</option>
               <option value="3600">1 h / s</option>
               <option value="21600" selected>6 h / s</option>
               <option value="86400">1 d / s</option>
             </select>
           </div>
-        </div>
-        <p class="field-error" id="time-error" role="alert"></p>
+          <p class="field-error" id="time-error" role="alert"></p>
+        </section>
 
-        <div class="time-body">
+        <p class="hud model-chip"><span class="status" id="data-status" role="status" aria-live="polite">Loading ephemeris…</span><span id="model-chip"></span></p>
+
+        <div class="demo" id="demo" hidden></div>
+        <div class="overlay" id="scene-overlay" role="alert" hidden></div>
+      </main>
+
+      <!-- Analysis: the detailed tools, opened on request. -->
+      <aside class="analysis" id="analysis" aria-label="Analysis" hidden>
+        <header class="analysis-head">
+          <h2>Analysis</h2>
+          <div class="analysis-actions">
+            <button type="button" class="btn" id="open-catalogue" title="Choose a named site for A or B">Site catalogue</button>
+            <button type="button" class="btn" id="open-scenarios" title="Saved comparison scenarios">Scenarios</button>
+            <button type="button" class="btn" id="close-analysis" title="Close Analysis">Close</button>
+          </div>
+        </header>
+        <div class="analysis-body">
+          <p class="analysis-note">Everything here uses the reference-sphere model unless it says otherwise. The selected point in the scene is the active site below (A or B).</p>
+          <div id="mission-host"></div>
+          <details class="fold sites-fold" id="fold-sites">
+            <summary><span class="fold-title">Sites A and B</span><span class="fold-note">Sky now, next changes, location · reference-sphere model</span></summary>
+            <section class="sites" id="sites" aria-label="Sites A and B"></section>
+          </details>
+          <section class="analysis-period" aria-label="Comparison period">
+            <form class="period-form" id="period-form" novalidate>
+              <span class="group-label">Period, UTC</span>
+              <input id="period-start" type="text" spellcheck="false" autocomplete="off" aria-label="Comparison period start, UTC, ISO 8601 ending in Z" placeholder="2026-11-01T00:00:00Z" disabled />
+              <span class="to">to</span>
+              <input id="period-end" type="text" spellcheck="false" autocomplete="off" aria-label="Comparison period end, UTC, ISO 8601 ending in Z" placeholder="2026-12-01T00:00:00Z" disabled />
+              <button type="submit" class="btn" id="period-apply" title="Analyse both sites over this period" disabled>Apply</button>
+              <button type="button" class="btn" id="period-full" title="Use the whole prepared dataset" disabled>Full range</button>
+            </form>
+            <p class="field-error" id="period-error" role="alert"></p>
+          </section>
           <details class="fold timeline-wrap" id="fold-timeline" open>
             <summary><span class="fold-title">Above-horizon intervals</span><span class="fold-note">Selected period · reference-sphere model · click or drag to set the time</span></summary>
             <div id="timeline"></div>
-            <input id="time-slider" class="slider" type="range" min="0" max="1" step="any" value="0" aria-label="Current time within the comparison period" disabled />
           </details>
           <details class="fold comparison" id="fold-comparison" open>
             <summary><span class="fold-title">Comparison over the period</span><span class="fold-note">Reference-sphere model</span></summary>
             <div id="comparison"></div>
           </details>
         </div>
-      </section>
-
-      <footer class="disclaimer" role="note">
-        <strong>Model limits.</strong>
-        Comparisons, intervals and events use a smooth 1737.4 km reference sphere: no terrain, terrain shadows, eclipses or refraction. “Above the horizon” means the body centre is above the local tangent plane — not real illumination, electrical power or a guaranteed radio link, and not a ranking of sites. Times come from 10-minute SPICE samples and are approximate. Sources and details: <button type="button" class="linklike" id="open-data-footer">Data &amp; accuracy</button>.
-      </footer>
+      </aside>
     </div>
 
     <dialog class="panel" id="dialog-catalogue" aria-labelledby="catalogue-title">

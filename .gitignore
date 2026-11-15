@@ -8,3 +8,17 @@ __pycache__/
 *.pyc
 artifacts/
 
+
+# Local credentials, browser state and original science kernels
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.bsp
+*.bpc
+kernels/
+playwright-report/
+test-results/

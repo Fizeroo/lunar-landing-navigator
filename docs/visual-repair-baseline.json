@@ -1,0 +1,66 @@
+﻿{
+    "baselineBuild":  "index-OFQvEFFO.js",
+    "head":  "a135d52",
+    "files":  [
+                  {
+                      "path":  "src/contracts.ts",
+                      "sha256":  "e48df1ef7be7d096a0945e2e2933c4bcc316626f679f0b59c6e551c730ae4700"
+                  },
+                  {
+                      "path":  "src/science/index.ts",
+                      "sha256":  "c199ec44438426c0aae52ed4e2867a1ccc4c8dd622463ac12352ff7bea7b7806"
+                  },
+                  {
+                      "path":  "src/science/observer.ts",
+                      "sha256":  "4fc60250e00e2061f81d33671562be19d0234f44879381c36d6abb9a26fafb99"
+                  },
+                  {
+                      "path":  "src/science/intervals.ts",
+                      "sha256":  "d39986563fb806b0b1c9b149d30dc977fd1eeb8a62ed8b53b22b915c44d272fe"
+                  },
+                  {
+                      "path":  "src/science/events.ts",
+                      "sha256":  "9f0cc9ee003438d4362a5dcbf213f3479f3ad52b887071ff099d411e045634a8"
+                  },
+                  {
+                      "path":  "src/science/mission.ts",
+                      "sha256":  "352c8e7d3211d3af18a822ea16cc4d5596c7243ed5c0b9457ef601680b4fe3bc"
+                  },
+                  {
+                      "path":  "src/science/terrain.ts",
+                      "sha256":  "6765f7ea1348bf009f7dda03bb1ae0a71dc57741bf00779a899939a162a53642"
+                  },
+                  {
+                      "path":  "src/science/candidates.ts",
+                      "sha256":  "1313357c1e314a9d0a6472477aceb407bc1ebf2f1d0ab495d39f7fb7cdd78d93"
+                  },
+                  {
+                      "path":  "public/data/terrain-pgda90-southpolar.json",
+                      "sha256":  "dceac4465b00d8bc8a0cdd42662793540259b45aa0a76f53b322b559dd506db6"
+                  },
+                  {
+                      "path":  "public/data/ephemeris-2026-10_2027-02.json",
+                      "sha256":  "02873a58203073d7633b584cb763ee1e7037230d69edfbccde34e9e2506de5cb"
+                  },
+                  {
+                      "path":  "src/main.ts",
+                      "sha256":  "934da1821116b8847c11c2eb9d86881b3b0aa20c3e7d521cc7845a4b64c68bcd"
+                  },
+                  {
+                      "path":  "src/scene/MoonScene.ts",
+                      "sha256":  "69d1cb0ccab497ab12b7caa3f009ede02b506708fa4a4061dd06d8db68523ba7"
+                  },
+                  {
+                      "path":  "src/scene/SurfaceScene.ts",
+                      "sha256":  "9d92babfb9f3a41545fa788f6c7aef9ab18d222beda2019b133749848431c9e1"
+                  },
+                  {
+                      "path":  "src/scene/sky.ts",
+                      "sha256":  "472be963eda15e484c124b45b3bc82f3934e00c29f654284f3fc6e67069a45e5"
+                  },
+                  {
+                      "path":  "src/ui/CandidatesPanel.ts",
+                      "sha256":  "6870cf3cb3ab7bb4244e3e5401f051bd663448b881a4dfde5cfff4e9c7755202"
+                  }
+              ]
+}
