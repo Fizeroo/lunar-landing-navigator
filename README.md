@@ -13,7 +13,13 @@ npm run build
 npm run preview -- --host 127.0.0.1 --port 4173 --strictPort
 ```
 
-Open **http://127.0.0.1:4173/**. For development use `npm run dev`. The delivered preview is local; no website deployment or competition submission is included.
+Open **http://127.0.0.1:4173/**. For development use `npm run dev`. The local preview remains available. Public hosting is configured through GitHub Pages; competition submission is a separate action.
+
+## GitHub Pages
+
+Target site address: **https://fizeroo.github.io/lunar-landing-navigator/**. Publication is pending permission to write the workflow file; this is not yet a verified live site.
+
+Pushing `main` runs [the Pages workflow](https://github.com/Fizeroo/lunar-landing-navigator/actions/workflows/pages.yml): `npm ci` -> `npm run build` -> upload **only `dist`** -> deploy with the workflow's `GITHUB_TOKEN` and OIDC. No paid hosting, custom domain or repository-visibility change is required. See [publication configuration](docs/pages-deployment.md). Local builds default to `/`; the workflow sets `VITE_BASE_PATH=/lunar-landing-navigator/`.
 
 ## Main workflow
 

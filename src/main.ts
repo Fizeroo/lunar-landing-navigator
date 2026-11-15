@@ -30,13 +30,14 @@ import { TerrainProfileView } from './ui/TerrainProfileView';
 import { Timeline, type TimelineRow, type TimelineTick } from './ui/Timeline';
 
 /** Extended dataset first; the original November dataset is a real, labelled fallback. */
-const DATA_URLS = ['/data/ephemeris-2026-10_2027-02.json', '/data/ephemeris-2026-11.json'] as const;
-const TERRAIN_URL = '/data/terrain-pgda90-southpolar.json';
+const DATA_ROOT = `${import.meta.env.BASE_URL}data/`;
+const DATA_URLS = [`${DATA_ROOT}ephemeris-2026-10_2027-02.json`, `${DATA_ROOT}ephemeris-2026-11.json`] as const;
+const TERRAIN_URL = `${DATA_ROOT}terrain-pgda90-southpolar.json`;
 /** Visual-context assets: drawn around the scientific patch, never read by any calculation. */
-const CONTEXT_URL = '/data/visual-context-pgda90-80km.json';
-const GLOBAL_CONTEXT_URL = '/data/visual-context-lola-global-4ppd.json';
+const CONTEXT_URL = `${DATA_ROOT}visual-context-pgda90-80km.json`;
+const GLOBAL_CONTEXT_URL = `${DATA_ROOT}visual-context-lola-global-4ppd.json`;
 const REFERENCE_RADIUS_M = 1737400;
-const DEMO_URL = '/data/mission-demo.json';
+const DEMO_URL = `${DATA_ROOT}mission-demo.json`;
 const SITE_IDS = ['a', 'b'] as const;
 const SITE_NAME: Record<SiteId, string> = { a: 'Site A', b: 'Site B' };
 const DEFAULT_ENTRY: Record<SiteId, string> = { a: 'shackleton', b: 'mons-mouton' };
@@ -1676,7 +1677,7 @@ async function loadVisualContext(patch: TerrainPatch): Promise<void> {
   try {
     const meta = await fetchJson(GLOBAL_CONTEXT_URL);
     const file = typeof (meta as { dataFile?: unknown }).dataFile === 'string' ? (meta as { dataFile: string }).dataFile : '';
-    const response = await fetch(`/data/${file}`, { cache: 'no-cache' });
+    const response = await fetch(`${DATA_ROOT}${file}`, { cache: 'no-cache' });
     if (!file || !response.ok) throw new Error(`Visual context: HTTP ${response.status} for the global height file`);
     global = parseGlobalHeights(meta, await response.arrayBuffer());
   } catch (error) {
